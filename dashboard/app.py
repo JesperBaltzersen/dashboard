@@ -1,6 +1,7 @@
 import sys
 import subprocess
 import importlib.util
+from routes import setup_flask_routes
 
 def check_package(package_name):
     """Check if a package is installed"""
@@ -182,22 +183,6 @@ def setup_dash_app():
 
 #-----------------------------Flask Routes-----------------------------------------------------
 
-def setup_flask_routes():
-    @server.route('/')
-    def home():
-        return render_template('index.html')
-    
-    @server.route('/about')
-    def about():
-        return render_template('about.html')
-
-    @server.route('/contact')
-    def contact():
-        return render_template('contact.html')
-    
-    @server.route('/dashboard/')
-    def dashboard():
-        return render_template('dashboard.html')
 
 #----------------------------------------run loop--------------------------------------
 
@@ -206,7 +191,7 @@ try:
     server = Flask(__name__)
 
     # ... existing Dash setup code ...
-    setup_flask_routes()
+    setup_flask_routes(server)
 
     setup_dash_app()
 
