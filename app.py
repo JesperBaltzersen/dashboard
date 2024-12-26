@@ -180,40 +180,6 @@ def setup_dash_app():
         price_change = filtered_df['GOOG'].iloc[-1] - filtered_df['GOOG'].iloc[0]
         return fig, f"Price Change: ${price_change:.2f}"
 
-'''
-    # Sample data
-    df = px.data.iris()
-
-    # Create Plotly figure
-    fig = px.scatter(df, x="sepal_width", y="sepal_length", color="species",
-                     title="Click on a Data Point")
-
-    # Modify the layout to be more modular
-    dash_app.layout = html.Div([
-        html.Div([
-            html.H1('Iris Dataset Analysis'),
-            html.P('Click on any point in the scatter plot to see details'),
-            dcc.Graph(
-                id='scatter-plot',
-                figure=fig
-            ),
-            html.Div(id='output-div', className='output-container')
-        ], className='dash-container')
-    ])
-
-    @dash_app.callback(
-        Output('output-div', 'children'),  # Update this div with the click result
-        Input('scatter-plot', 'clickData')  # Input is the click event data
-    )
-    
-    def display_click_data(clickData):
-        if clickData is None:
-            return "Click on a point to see its details here."
-        point = clickData['points'][0]
-        print(f"clickData: {clickData}")
-        return f"You clicked on: x={point['x']}, y={point['y']}, species={point.get('customdata', 'N/A')}"
-'''
-
 #-----------------------------Flask Routes-----------------------------------------------------
 
 def setup_flask_routes():
