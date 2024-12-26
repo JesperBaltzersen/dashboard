@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Upload Data - Data Analysis{% endblock %}
+
+{% block content %}
+<div class="page-container">
+    <div class="content-section">
+        <h1>Upload Your Data</h1>
+        
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for message in messages %}
+                        <div class="alert">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        
+        <div class="upload-section">
+            <form method="POST" enctype="multipart/form-data" action="{{ url_for('upload_file') }}" class="upload-form">
+                <div class="form-group">
+                    <label for="file">Select CSV file:</label>
+                    <input type="file" id="file" name="file" accept=".csv">
+                </div>
+                <button type="submit" class="submit-button">Upload</button>
+            </form>
+        </div>
+
+        {% if columns %}
+        <div class="data-preview">
+            <h2>Data Preview</h2>
+            <p>Number of rows: {{ row_count }}</p>
+            <h3>Available Columns:</h3>
+            <ul class="columns-list">
+                {% for column in columns %}
+                <li>{{ column }}</li>
+                {% endfor %}
+            </ul>
+            <a href="/dashboard/" class="button">View Dashboard</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %} 

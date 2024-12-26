@@ -181,8 +181,23 @@ def setup_dash_app():
         price_change = filtered_df['GOOG'].iloc[-1] - filtered_df['GOOG'].iloc[0]
         return fig, f"Price Change: ${price_change:.2f}"
 
-#-----------------------------Flask Routes-----------------------------------------------------
+    # In your Dash setup
+    def get_current_data():
+        global current_df
+        return current_df if current_df is not None else pd.DataFrame()
 
+    # Update your Dash callbacks to use get_current_data()
+    @dash_app.callback(
+        [Output('some-graph', 'figure')],
+        [Input('some-input', 'value')]
+    )
+    def update_graph(value):
+        df = get_current_data()
+        if df.empty:
+            return px.scatter()  # return empty figure
+        # Create your figure using df
+        fig = px.scatter(df, ...)
+        return fig
 
 #----------------------------------------run loop--------------------------------------
 
