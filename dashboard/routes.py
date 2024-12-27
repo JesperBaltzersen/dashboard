@@ -1,5 +1,5 @@
 from flask import Flask
-from dash import Dash
+from dash import Dash, dash_table
 from flask import render_template
 from flask import request, flash
 import pandas as pd
@@ -70,10 +70,20 @@ def setup_flask_routes(server):
                     filepath = os.path.join(server.config['UPLOAD_FOLDER'], filename)
                     file.save(filepath)
                     
+                    preview_data = current_df.head()
+                    
+                    # Create a styled HTML table using pandas
+                    table_html = preview_data.to_html(
+                        classes='table table-striped table-bordered',
+                        index=False,
+                        escape=False,
+                        float_format=lambda x: '%.2f' % x if isinstance(x, float) else x
+                    )
+
                     flash('File successfully uploaded and processed')
                     return render_template('upload.html', 
-                                        columns=current_df.columns.tolist(),
-                                        row_count=len(current_df))
+                                    table_html=table_html,
+                                    row_count=len(current_df))
                 except Exception as e:
                     flash(f'Error processing file: {str(e)}')
                     return render_template('upload.html')

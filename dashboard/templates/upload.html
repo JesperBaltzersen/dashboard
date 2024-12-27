@@ -27,16 +27,11 @@
             </form>
         </div>
 
-        {% if columns %}
-        <div class="data-preview">
+        {% if table_html %}
+        <div class="preview-section">
             <h2>Data Preview</h2>
             <p>Number of rows: {{ row_count }}</p>
-            <h3>Available Columns:</h3>
-            <ul class="columns-list">
-                {% for column in columns %}
-                <li>{{ column }}</li>
-                {% endfor %}
-            </ul>
+            {{ table_html | safe }}
             <a href="/dashboard/" class="button">View Dashboard</a>
         </div>
         {% endif %}
